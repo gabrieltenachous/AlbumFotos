@@ -90,25 +90,43 @@ namespace AlbumFotos.Controllers
             {
                 return NotFound();
             }
+
+            TempData["FotoTopo"] = album.FotoTopo;
+
             return View(album);
         }
+
 
         // POST: Albuns/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlbumId,Destino,FotoTopo,Inicio,Fim")] Album album)
+        public async Task<IActionResult> Edit(int id, [Bind("AlbumId,Destino,FotoTopo,Inicio,Fim")] Album album, IFormFile arquivo)
         {
             if (id != album.AlbumId)
             {
                 return NotFound();
             }
 
+            if (String.IsNullOrEmpty(album.FotoTopo))
+                album.FotoTopo = TempData["FotoTopo"].ToString();
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var linkUpload = Path.Combine(_hostingEnviroment.WebRootPath, "Imagens");
+
+                    if (arquivo != null)
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(linkUpload, arquivo.FileName), FileMode.Create))
+                        {
+                            await arquivo.CopyToAsync(fileStream);
+                            album.FotoTopo = "~/Imagens/" + arquivo.FileName;
+                        }
+                    }
+
                     _context.Update(album);
                     await _context.SaveChangesAsync();
                 }
@@ -128,7 +146,7 @@ namespace AlbumFotos.Controllers
             return View(album);
         }
 
-         
+
         // POST: Albuns/Delete/5
         [HttpPost] 
         public async Task<JsonResult> Delete(int AlbumId)

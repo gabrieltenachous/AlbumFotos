@@ -144,7 +144,7 @@ using AlbumFotos.Models;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(872, 59, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74674ab25fad41e08a6bdc930539c1d2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8ae4c42dcfc042afa52d5e463c09ea69", async() => {
                 BeginContext(923, 4, true);
                 WriteLiteral("Edit");
                 EndContext();
@@ -179,7 +179,7 @@ using AlbumFotos.Models;
             WriteLiteral(" |\r\n    ");
             EndContext();
             BeginContext(939, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0cd6028359264e579a8f27fbed517d83", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f2815ead3f5047bfb5f2428f3fdf3da2", async() => {
                 BeginContext(961, 12, true);
                 WriteLiteral("Back to List");
                 EndContext();
