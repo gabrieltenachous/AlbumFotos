@@ -25,3 +25,8 @@ C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\net
 C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\netcoreapp2.1\AlbumFotos.dll
 C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\netcoreapp2.1\AlbumFotos.pdb
 C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\netcoreapp2.1\AlbumFotos.csproj.CopyComplete
+C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\netcoreapp2.1\Razor\Views\Albuns\Create.g.cshtml.cs
+C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\netcoreapp2.1\Razor\Views\Albuns\Delete.g.cshtml.cs
+C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\netcoreapp2.1\Razor\Views\Albuns\Details.g.cshtml.cs
+C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\netcoreapp2.1\Razor\Views\Albuns\Edit.g.cshtml.cs
+C:\Users\gabri\OneDrive\Área de Trabalho\C#\AlbumFotos\AlbumFotos\obj\Debug\netcoreapp2.1\Razor\Views\Albuns\Index.g.cshtml.cs
