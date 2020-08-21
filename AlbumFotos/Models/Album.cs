@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AlbumFotos.Models
 {
@@ -12,7 +13,7 @@ namespace AlbumFotos.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         [StringLength(50, ErrorMessage = "Use menos caracteres")]
         public string Destino { get; set; }
-
+        
         public string FotoTopo { get; set; }
 
         [DataType(DataType.Date)]
@@ -23,9 +24,8 @@ namespace AlbumFotos.Models
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Campo obrigatório")]
-        public DateTime Fim { get; set; }  
+        public DateTime Fim { get; set; }
 
-        [NotMapped]
-        public ICollection<Imagem> Imagem { get; set; }
+        public ICollection<Imagem> Imagens { get; set; }
     }
 }

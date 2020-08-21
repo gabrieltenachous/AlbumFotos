@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlbumFotos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200819155948_atualizarDb")]
-    partial class atualizarDb
+    [Migration("20181110172150_criaçãoBD")]
+    partial class criaçãoBD
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -33,7 +33,8 @@ namespace AlbumFotos.Migrations
 
                     b.Property<DateTime>("Fim");
 
-                    b.Property<string>("FotoTopo");
+                    b.Property<string>("FotoTopo")
+                        .IsRequired();
 
                     b.Property<DateTime>("Inicio");
 
@@ -50,7 +51,8 @@ namespace AlbumFotos.Migrations
 
                     b.Property<int>("AlbumId");
 
-                    b.Property<string>("Link");
+                    b.Property<string>("Link")
+                        .IsRequired();
 
                     b.HasKey("ImagemId");
 
@@ -62,7 +64,7 @@ namespace AlbumFotos.Migrations
             modelBuilder.Entity("AlbumFotos.Models.Imagem", b =>
                 {
                     b.HasOne("AlbumFotos.Models.Album", "Album")
-                        .WithMany()
+                        .WithMany("Imagens")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

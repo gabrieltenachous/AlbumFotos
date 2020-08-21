@@ -9,16 +9,18 @@ using AlbumFotos.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+
 namespace AlbumFotos.Controllers
 {
     public class AlbunsController : Controller
     {
         private readonly Contexto _context;
-        private readonly IHostingEnvironment _hostingEnviroment;
-        public AlbunsController(Contexto context, IHostingEnvironment hostingEnviroment)
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public AlbunsController(Contexto context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
-            _hostingEnviroment = hostingEnviroment;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Albuns
@@ -56,20 +58,21 @@ namespace AlbumFotos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlbumId,Destino,FotoTopo,Inicio,Fim")] Album album,IFormFile arquivo)
+        public async Task<IActionResult> Create([Bind("AlbumId,Destino,FotoTopo,Inicio,Fim")] Album album, IFormFile arquivo)
         {
             if (ModelState.IsValid)
             {
-                var linkUpload = Path.Combine(_hostingEnviroment.WebRootPath, "Imagens");
+                var linkUpload = Path.Combine(_hostingEnvironment.WebRootPath, "Imagens");
 
                 if(arquivo != null)
                 {
                     using (var fileStream = new FileStream(Path.Combine(linkUpload, arquivo.FileName), FileMode.Create))
                     {
                         await arquivo.CopyToAsync(fileStream);
-                        album.FotoTopo = "~/Imagens" + arquivo.FileName;
+                        album.FotoTopo = "~/Imagens/" + arquivo.FileName;
                     }
                 }
+
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,7 +99,6 @@ namespace AlbumFotos.Controllers
             return View(album);
         }
 
-
         // POST: Albuns/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -116,9 +118,9 @@ namespace AlbumFotos.Controllers
             {
                 try
                 {
-                    var linkUpload = Path.Combine(_hostingEnviroment.WebRootPath, "Imagens");
+                    var linkUpload = Path.Combine(_hostingEnvironment.WebRootPath, "Imagens");
 
-                    if (arquivo != null)
+                    if(arquivo != null)
                     {
                         using (var fileStream = new FileStream(Path.Combine(linkUpload, arquivo.FileName), FileMode.Create))
                         {
@@ -144,17 +146,29 @@ namespace AlbumFotos.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(album);
-        }
-
+        }        
 
         // POST: Albuns/Delete/5
-        [HttpPost] 
+        [HttpPost]
         public async Task<JsonResult> Delete(int AlbumId)
         {
             var album = await _context.Albuns.FindAsync(AlbumId);
+            IEnumerable<string> links = _context.Imagens.Where(i => i.AlbumId == AlbumId).Select(i => i.Link);
+
+            foreach(var link in links)
+            {
+                var linkImagem = link.Replace("~", "wwwroot");
+                System.IO.File.Delete(linkImagem);
+            }
+
+            _context.Imagens.RemoveRange(_context.Imagens.Where(x => x.AlbumId == AlbumId));
+
+            string linkFotoAlbum = album.FotoTopo;
+            linkFotoAlbum = linkFotoAlbum.Replace("~", "wwwroot");
+            System.IO.File.Delete(linkFotoAlbum);
             _context.Albuns.Remove(album);
             await _context.SaveChangesAsync();
-            return Json("Album Excluido com Sucesso");
+            return Json("Album excluído com sucesso");
         }
 
         private bool AlbumExists(int id)

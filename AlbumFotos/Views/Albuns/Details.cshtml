@@ -1,42 +1,46 @@
 ﻿@model AlbumFotos.Models.Album
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do album " + Model.Destino;
 }
 
-<h2>Details</h2>
+<div class="album">
+    <div class="foto">
+        <div class="container">
+            <div class="texto">
+                <h2 class="white-text">@Html.DisplayFor(model => model.Destino)</h2>
+                <h5 class="white-text">@Html.DisplayFor(model => model.Inicio) a @Html.DisplayFor(model => model.Fim)</h5>
+            </div>
+        </div>
+    </div>
 
-<div>
-    <h4>Album</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Destino)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Destino)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FotoTopo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FotoTopo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Inicio)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Inicio)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Fim)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Fim)
-        </dd>
-    </dl>
+    <div>
+        <hr />
+        <h5 class="center">Fotos de(o) @Model.Destino</h5>
+        <hr />
+        <div class="linkImagem hide">@Model.FotoTopo</div>
+    </div>
+
+    <div class="botoes">
+        <a asp-controller="Imagens" asp-action="Create" asp-route-id="@Model.AlbumId" class="btn-small">Nova foto</a> |
+        <a asp-action="Index" class="btn-small grey darken-3">Voltar</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.AlbumId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+@await  Component.InvokeAsync("Imagem", new { id = Model.AlbumId})
+
+@section Scripts{
+    <script>
+    var linkImagem = $(".linkImagem").text();
+    var url = "/" + linkImagem;
+
+    $(document).ready(function () {
+        $(".foto").css("background-image", 'url("@Url.Content(Model.FotoTopo)")');
+    });
+    </script>
+}
+
+
+
+

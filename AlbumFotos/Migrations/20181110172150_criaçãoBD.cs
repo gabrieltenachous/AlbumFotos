@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AlbumFotos.Migrations
 {
-    public partial class criacaoDb : Migration
+    public partial class criaçãoBD : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace AlbumFotos.Migrations
                     AlbumId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Destino = table.Column<string>(maxLength: 50, nullable: false),
-                    FotoTopo = table.Column<string>(nullable: true),
+                    FotoTopo = table.Column<string>(nullable: false),
                     Inicio = table.Column<DateTime>(nullable: false),
                     Fim = table.Column<DateTime>(nullable: false)
                 },
@@ -31,35 +31,23 @@ namespace AlbumFotos.Migrations
                     ImagemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Link = table.Column<string>(nullable: false),
-                    AlbumId2 = table.Column<int>(nullable: true),
-                    AlbumId1 = table.Column<int>(nullable: true)
+                    AlbumId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Imagens", x => x.ImagemId);
                     table.ForeignKey(
-                        name: "FK_Imagens_Albuns_AlbumId1",
-                        column: x => x.AlbumId1,
+                        name: "FK_Imagens_Albuns_AlbumId",
+                        column: x => x.AlbumId,
                         principalTable: "Albuns",
                         principalColumn: "AlbumId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Imagens_Albuns_AlbumId2",
-                        column: x => x.AlbumId2,
-                        principalTable: "Albuns",
-                        principalColumn: "AlbumId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Imagens_AlbumId1",
+                name: "IX_Imagens_AlbumId",
                 table: "Imagens",
-                column: "AlbumId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Imagens_AlbumId2",
-                table: "Imagens",
-                column: "AlbumId2");
+                column: "AlbumId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
